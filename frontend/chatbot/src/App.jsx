@@ -5,11 +5,12 @@ const App = () => {
   const [message, setmessage] = useState([]);
   const [input, setinput] = useState("");
   const [loader, setloader] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
   const handleSendMessage =async()=>{
     setloader(true);
     if(!input.trim()) return;
     try{
-      const res =await axios.post("https://chatbot-97nl.onrender.com/",{
+      const res =await axios.post(`${API_URL}`,{
         text:input
       })
       if(res.status===200){
@@ -41,7 +42,7 @@ const App = () => {
             <div className="text-center text-gray-400 text-lg mt-20">
               👋 Hi, I'm{" "}
               <span className="text-green-500 font-semibold">
-                BotSpoof
+                Chatbot
               </span>.
             </div>
           ) : (
@@ -61,7 +62,7 @@ const App = () => {
 
               {loader && (
                 <div className="bg-gray-700 text-gray-300 px-4 py-2 rounded-xl max-w-[60%] self-start">
-                  Bot is typing...
+                  Enter Text 
                 </div>
               )}
             </>
@@ -75,7 +76,7 @@ const App = () => {
           <div className="flex items-center bg-gray-900 rounded-full px-4 py-2 shadow-lg">
             <input
               type="text"
-              placeholder="Ask BotSpoof..."
+              placeholder="Ask Questions ....."
               className="flex-1 bg-transparent outline-none text-white placeholder-gray-400"
               value={input}
               onChange={(e)=>setinput(e.target.value)}

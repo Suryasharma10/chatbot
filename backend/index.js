@@ -9,7 +9,9 @@ const port=process.env.PORT || 3000;
 
 //middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin:"https://chatbot-flame-two-77.vercel.app/"
+}));
 
 app.get('/',(req,res)=>{
     res.send("Hello 1123 World");
