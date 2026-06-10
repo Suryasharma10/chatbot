@@ -10,7 +10,7 @@ const App = () => {
     setloader(true);
     if(!input.trim()) return;
     try{
-      const res =await axios.post(`${API_URL}`,{
+      const res =await axios.post(`${API_URL}/bot/v1`,{
         text:input
       })
       if(res.status===200){
