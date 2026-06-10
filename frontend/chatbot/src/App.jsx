@@ -9,7 +9,7 @@ const App = () => {
     setloader(true);
     if(!input.trim()) return;
     try{
-      const res =await axios.post("http://localhost:4002/bot/v1/message",{
+      const res =await axios.post("https://chatbot-97nl.onrender.com/",{
         text:input
       })
       if(res.status===200){
