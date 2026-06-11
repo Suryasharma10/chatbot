@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState ,useRef,useEffect } from 'react'
 import axios from 'axios';
-
 const App = () => {
   const [message, setmessage] = useState([]);
   const [input, setinput] = useState("");
   const [loader, setloader] = useState(false);
-  const API_URL = import.meta.env.VITE_API_URL;
+  const bottomref =useRef(null);
+  useEffect(()=>{
+    bottomref.current?.scrollIntoView({
+      behavior:"smooth",
+    });
+  },[message]);
   const handleSendMessage =async()=>{
     setloader(true);
     if(!input.trim()) return;
     try{
-      const res =await axios.post(`${API_URL}/bot/v1`,{
+      const res =await axios.post('http://localhost:4002/bot/v1/message',{
         text:input
       })
       if(res.status===200){
@@ -34,7 +38,6 @@ const App = () => {
           <h1 className="text-lg font-bold">Chatbot Spaloop</h1>
         </div>
       </header>
-
       {/* Chat Area */}
       <main className="flex-1 overflow-y-auto pt-20 pb-28">
         <div className="max-w-4xl mx-auto px-4 flex flex-col gap-3">
@@ -54,12 +57,11 @@ const App = () => {
                     msg.sender === "user"
                       ? "bg-blue-600 self-end text-white"
                       : "bg-gray-800 self-start text-gray-100"
-                  }`}
-                >
+                  }`}>
                   {msg.text}
                 </div>
               ))}
-
+              <div ref={bottomref}></div>
               {loader && (
                 <div className="bg-gray-700 text-gray-300 px-4 py-2 rounded-xl max-w-[60%] self-start">
                   Enter Text 
@@ -69,11 +71,10 @@ const App = () => {
           )}
         </div>
       </main>
-
       {/* Footer */}
       <footer className="fixed bottom-0 left-0 w-full border-t border-gray-800 bg-[#0d0d0d] z-10">
         <div className="max-w-4xl mx-auto px-4 py-3">
-          <div className="flex items-center bg-gray-900 rounded-full px-4 py-2 shadow-lg">
+          <div className="flex items-center bg-gray-800 rounded-full px-4 py-2 shadow-lg">
             <input
               type="text"
               placeholder="Ask Questions ....."
@@ -82,8 +83,7 @@ const App = () => {
               onChange={(e)=>setinput(e.target.value)}
               onKeyDown={handlekeypress}
             />
-
-            <button className="ml-3 bg-green-600 hover:bg-green-700 px-5 py-2 rounded-full text-white font-medium transition-colors"
+            <button className="ml-3 bg-cyan-600 hover:bg-green-700 px-5 py-2 rounded-full text-white font-medium transition-colors"
             onClick={handleSendMessage}>
               Send
             </button>
@@ -93,5 +93,4 @@ const App = () => {
     </div>
   )
 }
-
 export default App

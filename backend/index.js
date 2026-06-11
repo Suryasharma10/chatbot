@@ -9,12 +9,10 @@ const port=process.env.PORT || 3000;
 
 //middleware
 app.use(express.json());
-app.use(cors({
-    origin:"https://chatbot-flame-two-77.vercel.app"
-}));
+app.use(cors());
 
 app.get('/',(req,res)=>{
-    res.send("Hello 1123 World");
+    res.send("Hello World");
 })
 //database connection
 mongoose.connect(process.env.MONGO_URI)
@@ -25,7 +23,7 @@ mongoose.connect(process.env.MONGO_URI)
 })
 
 //definig route
-app.use("/bot/v1/",chatbotroute)
+app.use("/bot/v1/message",chatbotroute)
 
 app.listen(port,()=>{
     console.log(`Server is running on port ${port}`);  
